@@ -1,6 +1,6 @@
 {
   "name": "cal-hebrew",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CAL code to Hebrew Ashuri conversion",
   "main": "build/cal-hebrew.js",
   "mainMin": "build/cal-hebrew.min.js",
@@ -61,9 +61,9 @@
   },
   "homepage": "https://github.com/peshitta/cal-hebrew#readme",
   "dependencies": {
-    "aramaic-mapper": "^1.0.8",
-    "cal-code-util": "^1.0.8",
-    "hebrew-code-util": "^1.0.1"
+    "aramaic-mapper": "^1.0.9",
+    "cal-code-util": "^1.0.9",
+    "hebrew-code-util": "^1.0.2"
   },
   "devDependencies": {
     "coveralls": "^3.0.0",

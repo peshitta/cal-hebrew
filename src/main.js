@@ -3,7 +3,8 @@ import { Writing, Mapper } from 'aramaic-mapper';
 import {
   allConsonants as calConsonants,
   vowels as calVowels,
-  diacriticsByName
+  diacriticsByName,
+  isDotted
 } from 'cal-code-util';
 import {
   consonants as hebrewConsonants,
@@ -31,8 +32,9 @@ const hebrewWriting = new Writing(
   Object.freeze(hebrewConsonants.concat('\u05E4', '\u05E9')),
   Object.freeze(hebrewCommonVowels.concat(hebrewEasternVowels))
 );
-const dottedShin = '\u05E9\u05C1';
-const dottedSin = '\u05E9\u05C2';
+const shin = '\u05E9';
+const dottedShin = `${shin}\u05C1`;
+const dottedSin = `${shin}\u05C2`;
 
 /**
  * @private
@@ -40,9 +42,10 @@ const dottedSin = '\u05E9\u05C2';
  * @param { string } word input word
  * @param { number } i current index in the word
  * @param { Object.<string, string> } fromTo mapping dictionary
+ * @param { Object } wordProps optional word settings
  * @returns { string } Hebrew mapped char
  */
-const callback = (word, i, fromTo) => {
+const callback = (word, i, fromTo, wordProp) => {
   const c = word.charAt(i);
   switch (c) {
     case diacriticsByName.qushaya:
@@ -52,9 +55,9 @@ const callback = (word, i, fromTo) => {
     case diacriticsByName.seyame:
       return ''; // leave letter un-dotted as no equivalent exists
     case '&':
-      return dottedSin; // dotted sin
+      return wordProp.isDotted ? dottedSin : shin;
     case '$':
-      return dottedShin; // dotted shin
+      return wordProp.isDotted ? dottedShin : shin;
     case 'O':
       return word.charAt(i - 1) === 'w' ? '\u05BA' : '\u05B9'; // holam haser or holam
     case 'u':
@@ -79,6 +82,11 @@ mapper.multiples = [dottedShin, dottedSin];
  * @returns { string } the input word converted to Hebrew Unicode
  */
 export const toHebrew = word => {
-  const mappedWord = mapper.map(word);
+  const wordProp = Object.freeze(
+    Object.create(null, {
+      isDotted: { value: isDotted(word), enumerable: true }
+    })
+  );
+  const mappedWord = mapper.map(word, wordProp);
   return endify(mappedWord);
 };

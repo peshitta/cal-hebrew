@@ -77,7 +77,7 @@ describe('CAL', () => {
     });
     it('Word with Hebrew Sin', () => {
       const word = sut.toHebrew(')Pbhwh&');
-      const wordExpected = 'אפבהוהשׂ';
+      const wordExpected = 'אפבהוהש';
       const vocalised = sut.toHebrew(')aPeb,ohawh_&o');
       const vocalisedExpected = 'אַפֵבָהַוהשָׂ';
       test.strictEqual(word, wordExpected, 'sut.toHebrew consonant with Sin');
@@ -89,7 +89,7 @@ describe('CAL', () => {
     });
     it('Word with Hebrew Shin', () => {
       const word = sut.toHebrew(')d$)');
-      const wordExpected = 'אדשׁא';
+      const wordExpected = 'אדשא';
       const vocalised = sut.toHebrew(')od,$o)');
       const vocalisedExpected = 'אָדשָׁא';
       test.strictEqual(word, wordExpected, 'sut.toHebrew consonant with Shin');
